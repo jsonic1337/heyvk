@@ -5,7 +5,7 @@ var name = ('олег'); //Имя
 var id = ('@jsonic'); //Пуш
 var vkl = ('твкл'); //Включить скрипт
 var vykl = ('твыкл'); //Выключить скрипт
-var time = 10
+var time = 10 //Задержка в милисекундах
 vk.longpoll.start();
 vk.on('message', function onMessage(event, msg) {
     if((msg.body.toLowerCase().includes(name) || msg.body.toLowerCase().includes(id)) && !a) {
@@ -15,7 +15,7 @@ vk.on('message', function onMessage(event, msg) {
           sticker_id: st
           });
           a = true; 
-setTimeout(() => {a = false;}, time); //Задержка в милисекундах
+setTimeout(() => {a = false;}, time); 
 }
 if(!msg.out) return;
     if(msg.body.toLowerCase() == vkl) {
