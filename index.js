@@ -5,10 +5,10 @@ var name = ('олег'); //Имя
 var id = ('@jsonic'); //Пуш
 var vkl = ('твкл'); //Включить скрипт
 var vykl = ('твыкл'); //Выключить скрипт
-var time = 10 //Кулдаун в милисекундах
+var time = 10000 //Задержка в милисекундах, 1 секунда = 1000 милисекунд
 vk.longpoll.start();
 vk.on('message', function onMessage(event, msg) {
-    if((msg.body.toLowerCase().includes(name) || msg.body.toLowerCase().includes(id)) && !a) {
+    if((msg.body.toLowerCase().includes(name) || msg.body.toLowerCase().includes(id)) && !b && !a) {
       var st = sts[Math.floor(Math.random()*sts.length)];
         vk.messages.send({
           peer_id: msg.peer_id,
@@ -17,12 +17,11 @@ vk.on('message', function onMessage(event, msg) {
           a = true; 
 setTimeout(() => {a = false;}, time); 
 }
-if(!msg.out) return;
-    if(msg.body.toLowerCase() == vkl) {
-      a = false;
+ if(!msg.out) return
+   if(msg.body.toLowerCase() == vkl) {
+    b = false;
 }
-    if(msg.body.toLowerCase() == vykl) {
-      a = true;
+   if(msg.body.toLowerCase() == vykl) {
+    b = true;
 }
     })
-
