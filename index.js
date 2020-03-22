@@ -20,8 +20,19 @@ setTimeout(() => {a = false;}, time);
  if(!msg.out) return
    if(msg.body.toLowerCase() == vkl) {
     b = false;
+    vk.messages.delete({
+      delete_for_all: 1,
+      message_ids: msg.id.toString()
+    })
+      msg.send('Триггеры включены!');
 }
    if(msg.body.toLowerCase() == vykl) {
     b = true;
+    vk.messages.delete({
+      delete_for_all: 1,
+      message_ids: msg.id.toString()
+    })
+      msg.send('Триггеры выключены!');
 }
     })
+    
