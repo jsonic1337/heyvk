@@ -11,13 +11,13 @@ let add = ('!стикер'),
     kd = ('!кд');
 
 var sts = [], chats = [],
-    a = false, b = false;
+    a = false;
 
 vk.longpoll.start();
 
 vk.on('message', function onMessage(event, msg) {
 
-  if((msg.body.toLowerCase().includes(name) || msg.body.toLowerCase().includes(id)) && chats.includes(msg.chat_id) && !b && !a) {
+  if((msg.body.toLowerCase().includes(name) || msg.body.toLowerCase().includes(id)) && !chats.includes(msg.chat_id) && !a) {
       var st = sts[Math.floor(Math.random()*sts.length)];
 
       vk.messages.send({ peer_id: msg.peer_id, sticker_id: st });
@@ -27,25 +27,16 @@ vk.on('message', function onMessage(event, msg) {
   }
 
   if(!msg.out) return
-
-  if(msg.body.toLowerCase() == 'твкл') {
-      b = false;
-
-      vk.messages.edit({ peer_id: msg.peer_id, message: 'Триггеры включены!', message_id: msg.id.toString() });
-  } else if(msg.body.toLowerCase() == 'твыкл') {
-      b = true;
-
-      vk.messages.edit({ peer_id: msg.peer_id, message: 'Триггеры выключены!', message_id: msg.id.toString() });
-  } else if((msg.body.toLowerCase() == '!вайт') && (!chats.includes(msg.chat_id))) {
+    if((msg.body.toLowerCase() == '!игнор') && (!chats.includes(msg.chat_id))) {
       chats.push(msg.chat_id);
 
-      vk.messages.edit({ peer_id: msg.peer_id, message: 'Чат добавлен в вайт лист!', message_id: msg.id.toString() });
-  } else if((msg.body.toLowerCase() == '!двайт') && (chats.includes(msg.chat_id))) {
+      vk.messages.edit({ peer_id: msg.peer_id, message: 'Чат добавлен в игнор лист!', message_id: msg.id.toString() });
+  } else if((msg.body.toLowerCase() == '!вайт') && (chats.includes(msg.chat_id))) {
       delete chats[chats.indexOf(msg.chat_id)];
 
-      vk.messages.edit({ peer_id: msg.peer_id, message: 'Чат убран из вайт листа!', message_id: msg.id.toString() });
+      vk.messages.edit({ peer_id: msg.peer_id, message: 'Чат убран из игнор листа!', message_id: msg.id.toString() });
   } else if(msg.body.toLowerCase().startsWith(add)) {
-      let num = msg.body.toLowerCase().replace(add, '').trim();
+      let num = parseInt(msg.body.toLowerCase().replace(add, '').trim());
 
       if (!sts.includes(num)) {
           sts.push(num);
