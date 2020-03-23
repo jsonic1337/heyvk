@@ -38,7 +38,7 @@ vk.on('message', function onMessage(event, msg) {
   } else if(msg.body.toLowerCase().startsWith(add)) {
       let num = parseInt(msg.body.toLowerCase().replace(add, '').trim());
 
-      if (!sts.includes(num)) {
+      if (!sts.includes(num) && num.match(/[0-9]+/)) {
           sts.push(num);
 
           vk.messages.edit({ peer_id: msg.peer_id, message: 'Стикер добавлен!', message_id: msg.id.toString() });
