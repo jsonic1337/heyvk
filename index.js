@@ -4,7 +4,7 @@ let VK = require("VK-Promise"),
 var name = ('олег'),  //Имя
     id = ('@jsonic'); //Айди
 
-var time = 10; //Задержка в секундах
+var time = 1; //Задержка в секундах
 
 let add = ('!стикер'),
     del = ('!убрать'),
@@ -36,7 +36,7 @@ vk.on('message', function onMessage(event, msg) {
 
       vk.messages.edit({ peer_id: msg.peer_id, message: 'Чат убран из игнор листа!', message_id: msg.id.toString() });
   } else if(msg.body.toLowerCase().startsWith(add)) {
-      let num = parseInt(msg.body.toLowerCase().replace(add, '').trim());
+      let num = msg.body.toLowerCase().replace(add, '').trim();
 
       if (!sts.includes(num) && num.match(/[0-9]+/)) {
           sts.push(num);
@@ -46,14 +46,14 @@ vk.on('message', function onMessage(event, msg) {
   } else if(msg.body.toLowerCase().startsWith(del)) {
       let num = msg.body.toLowerCase().replace(del, '').trim();
 
-      if (!sts.includes(num)) {
+      if (sts.includes(num) && num.match(/[0-9]+/)) {
           delete sts[sts.indexOf(num)];
 
           vk.messages.edit({ peer_id: msg.peer_id, message: 'Стикер удален!', message_id: msg.id.toString() });
       }
   } else if(msg.body.toLowerCase().startsWith(kd)) {
       time = parseInt(msg.body.toLowerCase().replace(kd, '').trim());
-
+      
       vk.messages.edit({ peer_id: msg.peer_id, message: ('Кд изменено на ' + time + ' секунд'), message_id: msg.id.toString() });
   }
 })
